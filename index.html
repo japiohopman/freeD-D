@@ -1,0 +1,177 @@
+ <!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Add Swiper for carousel functionality -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+</head>
+<body>
+
+    <div id="mySidenavL" class="sidenavL">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavL()">&times;</a>
+        <a href="#">Journal</a>
+        <a href="#">Missions</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Equipment</a>
+        <a href="#">Key items</a>
+        <a href="#">Poitons</a>
+        <a href="#">Contact</a>
+      </div>
+      
+   
+     
+      
+
+    <div class="background-overlay" id="dynamic-background">
+        <!-- Dynamic background will be set via CSS/JS -->
+    </div>
+    
+    <div class="chat-container">
+        <!-- Game Stats Bar -->
+        <div class="game-stats-bar">
+            <div class="stat-item">
+                <i class="fas fa-coins"></i>
+                <span id="gold-amount">0</span> GP
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-star"></i>
+                <span id="xp-amount">0</span> XP
+            </div>
+            <div class="stat-item location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="current-location">Unknown</span>
+            </div>
+        </div>
+
+        <div class="chat-header">
+            <h1>D&D Chatbot</h1>
+            <div class="header-buttons">
+                <button class="nav-button" title="Toon/verberg info" onclick="toggleNavL()">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button class="nav-button" title="Toon/verberg info" onclick="toggleNav()">
+                    <i class="fas fa-toolbox"></i>
+                </button>
+                <button id="toggle-info" title="Toon/verberg info">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+                <button id="clear-chat" title="Wis chatgeschiedenis">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Character & NPC Info Carousel -->
+        <div class="info-panel" id="info-panel">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <!-- Player Character Card -->
+                    <div class="swiper-slide">
+                        <div class="character-card player-card">
+                            <div class="character-header">
+                                <h3>Your Character</h3>
+                            </div>
+
+                            
+
+                            <div class="character-details">
+                                <div class="character-avatar">
+                                    <img src="/images/Ava.png" alt="Player Character">
+                                </div>
+                                <div class="character-name" id="player-name">Character Name</div>
+                                <div class="character-class" id="player-class">Class/Level</div>
+                                <div class="character-stats">
+                                    <div class="stat">
+                                        <span class="stat-label">HP:</span>
+                                        <span class="stat-value" id="player-hp">0/0</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">AC:</span>
+                                        <span class="stat-value" id="player-ac">10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NPC Cards will be added dynamically -->
+                    <div class="swiper-slide">
+                        <div class="character-card npc-card">
+                            <div class="character-header">
+                                <h3>NPC Example</h3>
+                            </div>
+                            <div class="character-avatar">
+                                <img src="https://placehold.co/100x100/333333/ffffff?text=NPC" alt="NPC">
+                            </div>
+                            <div class="character-details">
+                                <div class="character-name">NPC Name</div>
+                                <div class="character-role">Role/Occupation</div>
+                                <div class="character-description">
+                                    A brief description of this NPC and their relevance to your adventure.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+        <div id="markdown-content">
+            <div class="chat-messages" id="chat-messages">
+                <!-- Chat messages will be added here dynamically -->
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <div class="character-avatar">
+                <img src="/images/Ava.png" alt="Player Character">
+            </div>
+            <input type="text" id="user-input" placeholder="Typ je bericht..." autocomplete="off">
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+<!-- footer                               -->
+    <footer>
+        <div class="footer">
+            <p id="current-date-time"></p>
+        </div>
+        </footer>
+        <audio id="backgroundMusic" preload="auto"></audio>
+        <audio id="soundEffects" preload="auto"></audio>
+        <script src="script.js" defer></script>
+        <script>
+            function toggleNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+    
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+            function toggleNavL() {
+  document.getElementById("mySidenavL").style.width = "250px";
+}
+
+function closeNavL() {
+  document.getElementById("mySidenavL").style.width = "0";
+}
+        </script>
+</body>
+</html>
